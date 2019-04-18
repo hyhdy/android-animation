@@ -2,8 +2,10 @@ package com.hyh.android_animation.fragment;
 
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,8 +38,12 @@ public class ViewAnimationFragment extends BaseFragment {
                 //mTvDis.startAnimation(animation);
 
                 //java代码加载动画
-                Animation animation = new ScaleAnimation(0,1,0,1,Animation.ABSOLUTE,50,Animation.ABSOLUTE,50);
+                Animation animation = new ScaleAnimation(0,1.2f,0,1.2f,Animation.ABSOLUTE,50,Animation.ABSOLUTE,50);
                 animation.setDuration(500);
+                //设置动画执行完毕后是否保持在最后的状态，如果为false会回到初始状态，如果为true则保持最后的状态
+                animation.setFillAfter(false);
+                //设置差值器，如果不设置则默认是AccelerateDecelerateInterpolato
+                animation.setInterpolator(new AccelerateDecelerateInterpolator());
                 animation.setAnimationListener(new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
