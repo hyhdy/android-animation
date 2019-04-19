@@ -1,26 +1,13 @@
 @startuml
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- ArrayList
-
-class ArrayList {
-Object[] elementData
-size()
-}
-
-enum TimeUnit {
-DAYS
-HOURS
-MINUTES
-}
+abstract class Animator
+class ValueAnimator
+class AnimatorSet
+class ObjectAnimator
+class TimeAnimator
+Animator <|-- AnimatorSet
+Animator <|-- ValueAnimator
+ValueAnimator <|-- ObjectAnimator
+ValueAnimator <|-- TimeAnimator
 
 @enduml

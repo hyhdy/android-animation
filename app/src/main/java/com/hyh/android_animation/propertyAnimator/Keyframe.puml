@@ -1,0 +1,16 @@
+@startuml
+
+abstract class Keyframe
+class ObjectKeyframe
+class IntKeyframe
+class FloatKeyframe
+
+Keyframe +-- ObjectKeyframe
+Keyframe <|-- ObjectKeyframe
+
+Keyframe +-- IntKeyframe
+Keyframe <|-- IntKeyframe
+
+Keyframe +-- FloatKeyframe
+Keyframe <|-- FloatKeyframe
+@enduml

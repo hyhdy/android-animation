@@ -1,0 +1,21 @@
+@startuml
+
+interface Keyframes
+interface IntKeyframes
+interface FloatKeyframes
+class KeyframeSet
+class IntKeyframeSet
+class FloatKeyframeSet
+
+Keyframes +-- IntKeyframes
+Keyframes +-- FloatKeyframes
+
+Keyframes <|.. KeyframeSet
+KeyframeSet <|-- IntKeyframeSet
+IntKeyframes <|.. IntKeyframeSet
+
+KeyframeSet <|-- FloatKeyframeSet
+FloatKeyframes <|.. FloatKeyframeSet
+
+
+@enduml

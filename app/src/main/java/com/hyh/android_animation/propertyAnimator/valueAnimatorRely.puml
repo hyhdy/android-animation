@@ -1,0 +1,14 @@
+@startuml
+
+class ValueAnimator
+class PropertyValuesHolder
+interface Keyframes
+class KeyframeSet
+abstract class Keyframe
+
+ValueAnimator o-- PropertyValuesHolder
+PropertyValuesHolder --> Keyframes
+Keyframes <|.. KeyframeSet
+KeyframeSet o-- Keyframe
+
+@enduml

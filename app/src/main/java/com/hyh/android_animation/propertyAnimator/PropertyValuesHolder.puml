@@ -1,0 +1,21 @@
+@startuml
+
+class PropertyValuesHolder
+class IntPropertyValuesHolder
+class FloatPropertyValuesHolder
+class MultiFloatValuesHolder
+class MultiIntValuesHolder
+
+PropertyValuesHolder +-- IntPropertyValuesHolder
+PropertyValuesHolder <|-- IntPropertyValuesHolder
+
+PropertyValuesHolder +-- FloatPropertyValuesHolder
+PropertyValuesHolder <|-- FloatPropertyValuesHolder
+
+PropertyValuesHolder +-- MultiFloatValuesHolder
+PropertyValuesHolder <|-- MultiFloatValuesHolder
+
+PropertyValuesHolder +-- MultiIntValuesHolder
+PropertyValuesHolder <|-- MultiIntValuesHolder
+
+@enduml
