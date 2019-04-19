@@ -8,8 +8,8 @@ public class PointEvaluator implements TypeEvaluator<Point> {
     @Override
     public Point evaluate(float fraction, Point startValue, Point endValue) {
         Point point = new Point();
-        point.x = (int) ((endValue.x - startValue.x) * fraction);
-        point.y = (int) ((endValue.x - startValue.x) * fraction);
+        point.x = (int) ((endValue.x - startValue.x) * fraction) + startValue.x;
+        point.y = (int) ((endValue.x - startValue.x) * fraction) + startValue.y;
         return point;
     }
 }
