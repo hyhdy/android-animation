@@ -3,12 +3,15 @@
 class ValueAnimator
 class PropertyValuesHolder
 interface Keyframes
+interface TypeEvaluator
+interface TimeInterpolator
 class KeyframeSet
 abstract class Keyframe
 
 ValueAnimator o-- PropertyValuesHolder
 PropertyValuesHolder --> Keyframes
 Keyframes <|.. KeyframeSet
+KeyframeSet --> TypeEvaluator
 KeyframeSet o-- Keyframe
-
+Keyframe --> TimeInterpolator
 @enduml

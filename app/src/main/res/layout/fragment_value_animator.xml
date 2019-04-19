@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_of_float"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="ofFloat" />
+
+        <Button
+            android:id="@+id/btn_of_int"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="ofInt" />
+
+        <Button
+            android:id="@+id/btn_of_object"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="ofObject" />
+
+        <Button
+            android:id="@+id/btn_of_pvh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="ofPvh" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_dis"
+        android:layout_width="250dp"
+        android:layout_height="400dp"
+        android:text="动画效果"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:background="@color/colorAccent"
+        android:layout_gravity="center"/>
+</FrameLayout>

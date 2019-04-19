@@ -20,6 +20,7 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(getResId(), null);
         InjectUtil.injectView(this);
+        InjectUtil.injectEvent(this);
         initViews(mRootView);
         return mRootView;
     }

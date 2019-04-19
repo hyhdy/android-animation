@@ -14,6 +14,7 @@ import com.hyh.android_animation.R;
 import com.hyh.annotation.InjectFragment;
 import com.hyh.base_lib.BaseFragment;
 import com.hyh.base_lib.annotation.FindViewByIdAno;
+import com.hyh.base_lib.annotation.OnClick;
 
 @InjectFragment()
 public class AnimatorFragment extends BaseFragment implements View.OnClickListener {
@@ -31,8 +32,6 @@ public class AnimatorFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     protected void initViews(View rootView) {
-        mBtnObject.setOnClickListener(this);
-        mBtnValue.setOnClickListener(this);
     }
 
     private void onClickObjectAnimator(){
@@ -61,7 +60,7 @@ public class AnimatorFragment extends BaseFragment implements View.OnClickListen
         //设置控件缩放的锚点（动画起始点）
         mTvDis.setPivotX(50);
         mTvDis.setPivotY(50);
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0,1.0f);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0,0.1f,0.11f,0.12f,0.13f,1.0f);
         valueAnimator.setDuration(500);
         //重复次数
         valueAnimator.setRepeatCount(0);
@@ -100,6 +99,7 @@ public class AnimatorFragment extends BaseFragment implements View.OnClickListen
     }
 
     @Override
+    @OnClick({R.id.btn_object_animator,R.id.btn_value_animator})
     public void onClick(View v) {
         int id = v.getId();
         if(id == R.id.btn_object_animator){
