@@ -1,5 +1,7 @@
 package com.hyh.android_animation.customview;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.Keyframe;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
@@ -7,21 +9,21 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PathMeasure;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Pair;
+import android.util.SparseArray;
 import android.view.View;
 
 import com.hyh.android_animation.evaluator.ExplodeEvaluator;
 import com.hyh.android_animation.explode.ExplodePoint;
+import com.hyh.android_animation.interpolator.SpringInterpolator;
 import com.hyh.base_lib.utils.BezierUtils;
 import com.hyh.base_lib.utils.CoordinateUtils;
 import com.hyh.base_lib.utils.SizeUtils;
 import com.hyh.base_lib.utils.TransformUtils;
 
-import java.security.KeyFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +31,15 @@ import java.util.List;
  * 实现爆种动画的自定义view
  */
 public class ExplodeView extends View {
-    public static final String sEmoji = "\uD83D\uDC4D\uD83C\uDFFB";
+    public static final String sEmoji = "\uD83D\uDE0D";
     public static final int SIZE_TEXT = 20;
-    public static final int RADIUS_EXPLODE = 30;
+    public static final int RADIUS_EXPLODE = 50;
     //爆种动画的个数
     public static final int NUM_EXPLODE = 6;
     public static final int ANGEL_RANGE_START = -20;
     public static final int ANGEL_RANGE_END = 20;
 
-    private List<PointF> mPointFList = new ArrayList<>();
+    private SparseArray<List<PointF>> mPointFArray = new SparseArray<>();
     private PointF mCenterPoint = new PointF();
 
     private Paint mPaint;
@@ -45,6 +47,7 @@ public class ExplodeView extends View {
     private float mWidth;
     private float mHeight;
     private float mRadius;
+    private int mIndex;
 
     public ExplodeView(Context context) {
         this(context,null);
@@ -70,10 +73,13 @@ public class ExplodeView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        for(PointF pointF: mPointFList){
-            int x = getTextBaseLineX(pointF);
-            int y = getTextBaseLineY(pointF);
-            canvas.drawText(sEmoji,x,y,mPaint);
+        for(int i =0;i<mPointFArray.size();i++){
+            List<PointF> pointFList = mPointFArray.valueAt(i);
+            for(PointF pointF: pointFList){
+                int x = getTextBaseLineX(pointF);
+                int y = getTextBaseLineY(pointF);
+                canvas.drawText(sEmoji,x,y,mPaint);
+            }
         }
     }
 
@@ -125,6 +131,9 @@ public class ExplodeView extends View {
     }
 
     public void startAnim(){
+        mIndex++;
+        final int index = mIndex;
+
         final List<ExplodePoint> explodePointList = buildExplodePoint();
         PropertyValuesHolder[] propertyValuesHolderArray = new PropertyValuesHolder[explodePointList.size()];
         for(int i =0 ;i<explodePointList.size();i++){
@@ -132,6 +141,8 @@ public class ExplodeView extends View {
             ExplodeEvaluator explodeEvaluator = new ExplodeEvaluator(explodePoint);
             Keyframe startPoint = Keyframe.ofObject(0,explodePoint.getStartPoint());
             Keyframe mid1 = Keyframe.ofObject(0.6f,explodePoint.getMidPoint());
+            //在第一阶段做直线运动时需要实现弹性效果，所以需要在第二个Keyframe加上一个Spring差值器
+            mid1.setInterpolator(new SpringInterpolator());
             //中间停留一会儿
             Keyframe mid2 = Keyframe.ofObject(0.8f,explodePoint.getMidPoint());
             Keyframe endPoint = Keyframe.ofObject(1.0f,explodePoint.getEndPoint());
@@ -146,14 +157,23 @@ public class ExplodeView extends View {
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                mPointFList.clear();
+                mPointFArray.remove(index);
+                List<PointF> pointFList = new ArrayList<>();
+                mPointFArray.put(index,pointFList);
                 for(int i =0;i<explodePointList.size();i++){
                     PointF pointF = (PointF) animation.getAnimatedValue(explodePointList.get(i).getPropertyName());
-                    mPointFList.add(pointF);
+                    pointFList.add(pointF);
                 }
                 invalidate();
             }
         });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mPointFArray.remove(index);
+            }
+        });
+        //只需要一个动画就能实现爆种效果
         valueAnimator.start();
     }
 }
