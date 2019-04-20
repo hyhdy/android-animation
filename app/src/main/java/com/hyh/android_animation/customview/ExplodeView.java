@@ -16,8 +16,9 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 
+import com.hyh.android_animation.data.PointWrap;
 import com.hyh.android_animation.evaluator.ExplodeEvaluator;
-import com.hyh.android_animation.explode.ExplodePoint;
+import com.hyh.android_animation.data.ExplodePoint;
 import com.hyh.android_animation.interpolator.SpringInterpolator;
 import com.hyh.base_lib.utils.BezierUtils;
 import com.hyh.base_lib.utils.CoordinateUtils;
@@ -32,14 +33,14 @@ import java.util.List;
  */
 public class ExplodeView extends View {
     public static final String sEmoji = "\uD83D\uDE0D";
-    public static final int SIZE_TEXT = 20;
-    public static final int RADIUS_EXPLODE = 50;
+    public static final int SIZE_TEXT = 30;
+    public static final int RADIUS_EXPLODE = 80;
     //爆种动画的个数
     public static final int NUM_EXPLODE = 6;
     public static final int ANGEL_RANGE_START = -20;
     public static final int ANGEL_RANGE_END = 20;
 
-    private SparseArray<List<PointF>> mPointFArray = new SparseArray<>();
+    private SparseArray<List<PointWrap>> mPointFArray = new SparseArray<>();
     private PointF mCenterPoint = new PointF();
 
     private Paint mPaint;
@@ -58,8 +59,8 @@ public class ExplodeView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setTextSize(SizeUtils.sp2px(SIZE_TEXT));
         mWidth = mPaint.measureText(sEmoji);
-        mHeight = mPaint.measureText(sEmoji);
         mFontMetrics = mPaint.getFontMetrics();
+        mHeight = mFontMetrics.descent - mFontMetrics.ascent;
         mRadius = SizeUtils.dp2px(RADIUS_EXPLODE);
     }
 
@@ -74,10 +75,11 @@ public class ExplodeView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         for(int i =0;i<mPointFArray.size();i++){
-            List<PointF> pointFList = mPointFArray.valueAt(i);
-            for(PointF pointF: pointFList){
-                int x = getTextBaseLineX(pointF);
-                int y = getTextBaseLineY(pointF);
+            List<PointWrap> pointFList = mPointFArray.valueAt(i);
+            for(PointWrap pointWrap: pointFList){
+                int x = getTextBaseLineX(pointWrap.getPoint());
+                int y = getTextBaseLineY(pointWrap.getPoint());
+                mPaint.setAlpha((int) (255 * pointWrap.getAlpha()));
                 canvas.drawText(sEmoji,x,y,mPaint);
             }
         }
@@ -135,7 +137,12 @@ public class ExplodeView extends View {
         final int index = mIndex;
 
         final List<ExplodePoint> explodePointList = buildExplodePoint();
-        PropertyValuesHolder[] propertyValuesHolderArray = new PropertyValuesHolder[explodePointList.size()];
+        PropertyValuesHolder[] propertyValuesHolderArray = new PropertyValuesHolder[explodePointList.size()+1];
+        Keyframe kfAlpha1 = Keyframe.ofFloat(0,1);
+        Keyframe kfAlpha2 = Keyframe.ofFloat(0.8f,1);
+        Keyframe kfAlpha3 = Keyframe.ofFloat(1.0f,0);
+        PropertyValuesHolder alphaValueHolder = PropertyValuesHolder.ofKeyframe("alpha",kfAlpha1,kfAlpha2,kfAlpha3);
+        propertyValuesHolderArray[0] = alphaValueHolder;
         for(int i =0 ;i<explodePointList.size();i++){
             ExplodePoint explodePoint = explodePointList.get(i);
             ExplodeEvaluator explodeEvaluator = new ExplodeEvaluator(explodePoint);
@@ -149,7 +156,7 @@ public class ExplodeView extends View {
             PropertyValuesHolder propertyValuesHolder = PropertyValuesHolder.ofKeyframe(explodePoint.getPropertyName(),startPoint,mid1,mid2,endPoint);
             propertyValuesHolder.setEvaluator(explodeEvaluator);
 
-            propertyValuesHolderArray[i]=propertyValuesHolder;
+            propertyValuesHolderArray[i+1]=propertyValuesHolder;
         }
 
         ValueAnimator valueAnimator = ValueAnimator.ofPropertyValuesHolder(propertyValuesHolderArray);
@@ -158,11 +165,14 @@ public class ExplodeView extends View {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 mPointFArray.remove(index);
-                List<PointF> pointFList = new ArrayList<>();
-                mPointFArray.put(index,pointFList);
+                List<PointWrap> pointWrapList = new ArrayList<>();
+                mPointFArray.put(index,pointWrapList);
+                float alpha = (float) animation.getAnimatedValue("alpha");
                 for(int i =0;i<explodePointList.size();i++){
+                    PointWrap pointWrap = new PointWrap(alpha);
                     PointF pointF = (PointF) animation.getAnimatedValue(explodePointList.get(i).getPropertyName());
-                    pointFList.add(pointF);
+                    pointWrap.setPoint(pointF);
+                    pointWrapList.add(pointWrap);
                 }
                 invalidate();
             }

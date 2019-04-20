@@ -1,4 +1,4 @@
-package com.hyh.android_animation.explode;
+package com.hyh.android_animation.data;
 
 import android.graphics.PointF;
 

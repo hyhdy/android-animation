@@ -2,9 +2,8 @@ package com.hyh.android_animation.evaluator;
 
 import android.animation.TypeEvaluator;
 import android.graphics.PointF;
-import android.util.Log;
 
-import com.hyh.android_animation.explode.ExplodePoint;
+import com.hyh.android_animation.data.ExplodePoint;
 import com.hyh.base_lib.utils.BezierUtils;
 
 /**
@@ -24,7 +23,7 @@ public class ExplodeEvaluator implements TypeEvaluator<PointF> {
         PointF endpoint = mExplodePoint.getEndPoint();
 
         if(startValue == startPoint){
-            //从第一阶段做直线运动
+            //第一阶段做直线运动
             float x = startValue.x + fraction * (endValue.x - startValue.x);
             float y = startValue.y + fraction * (endValue.y - startValue.y);
             PointF point = new PointF(x, y);

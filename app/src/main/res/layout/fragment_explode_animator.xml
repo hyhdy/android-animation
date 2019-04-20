@@ -8,11 +8,11 @@
         android:layout_height="match_parent"
         />
 
-    <Button
+    <com.hyh.android_animation.customview.LongClickButton
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="开始动画"
+        android:text="开始动画（长按有惊喜）"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_marginBottom="100dp"
         />
