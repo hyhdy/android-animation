@@ -3,13 +3,13 @@ package com.hyh.android_animation.data;
 import android.graphics.PointF;
 
 /**
- * 封装爆种动画关键坐标点信息
+ * 封装爆种动画属性信息
  * 爆种动画从开始坐标点到中间坐标点将做直线运动
  * 从中间坐标点到结束坐标点做贝塞尔曲线运动
  */
-public class ExplodePoint {
+public class ExplodeValue {
     //属性名
-    private String propertyName;
+    private String mKey;
     //起始坐标点
     private PointF mStartPoint;
     //中间坐标点
@@ -21,19 +21,22 @@ public class ExplodePoint {
     private PointF mControlOne;
     private PointF mControlTwo;
 
-    public ExplodePoint(String propertyName) {
-        this.propertyName = propertyName;
+    //随机旋转角度
+    private float mRotateDegree;
+
+    public ExplodeValue(String key) {
+        mKey = key;
     }
 
-    public ExplodePoint() {
+    public ExplodeValue() {
     }
 
-    public String getPropertyName() {
-        return propertyName;
+    public String getKey() {
+        return mKey;
     }
 
-    public void setPropertyName(String propertyName) {
-        this.propertyName = propertyName;
+    public void setKey(String key) {
+        this.mKey = key;
     }
 
     public PointF getStartPoint() {
@@ -74,5 +77,13 @@ public class ExplodePoint {
 
     public void setControlTwo(PointF controlTwo) {
         mControlTwo = controlTwo;
+    }
+
+    public float getRotateDegree() {
+        return mRotateDegree;
+    }
+
+    public void setRotateDegree(float rotateDegree) {
+        mRotateDegree = rotateDegree;
     }
 }

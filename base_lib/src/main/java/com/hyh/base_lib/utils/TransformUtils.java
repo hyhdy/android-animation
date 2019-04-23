@@ -24,13 +24,13 @@ public class TransformUtils {
      * @param end
      * @return
      */
-    public static double getRangeRandomDouble(int start, int end) {
+    public static float getRangeRandomDouble(int start, int end) {
         if (start >= end) {
             return 0;
         }
         Random random = new Random();
         int result = random.nextInt(end - start) + start;
-        double resultDouble = random.nextDouble()+result;
+        float resultDouble = random.nextFloat()+result;
         return resultDouble;
     }
 }

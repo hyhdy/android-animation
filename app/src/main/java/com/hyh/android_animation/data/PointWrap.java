@@ -5,6 +5,8 @@ import android.graphics.PointF;
 public class PointWrap {
     private PointF mPoint;
     private float alpha;
+    //emoji旋转角度
+    private float mDegree;
 
     public PointWrap(float alpha) {
         this.alpha = alpha;
@@ -24,5 +26,13 @@ public class PointWrap {
 
     public void setAlpha(float alpha) {
         this.alpha = alpha;
+    }
+
+    public float getDegree() {
+        return mDegree;
+    }
+
+    public void setDegree(float degree) {
+        mDegree = degree;
     }
 }

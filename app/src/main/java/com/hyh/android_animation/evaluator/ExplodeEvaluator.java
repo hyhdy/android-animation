@@ -3,16 +3,16 @@ package com.hyh.android_animation.evaluator;
 import android.animation.TypeEvaluator;
 import android.graphics.PointF;
 
-import com.hyh.android_animation.data.ExplodePoint;
+import com.hyh.android_animation.data.ExplodeValue;
 import com.hyh.base_lib.utils.BezierUtils;
 
 /**
  * 爆种动画估值器
  */
 public class ExplodeEvaluator implements TypeEvaluator<PointF> {
-    private ExplodePoint mExplodePoint;
+    private ExplodeValue mExplodePoint;
 
-    public ExplodeEvaluator(ExplodePoint explodePoint) {
+    public ExplodeEvaluator(ExplodeValue explodePoint) {
         mExplodePoint = explodePoint;
     }
 
