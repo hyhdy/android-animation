@@ -86,7 +86,7 @@ public class ExplodeView extends View {
             List<PointWrap> pointFList = mPointFArray.valueAt(i);
             for(PointWrap pointWrap: pointFList){
                 mMatrix.reset();
-                //绕中心点旋转随机角度
+                //绕emoji中心点旋转随机角度
                 mMatrix.preRotate(pointWrap.getDegree(),pointWrap.getPoint().x,pointWrap.getPoint().y);
                 canvas.setMatrix(mMatrix);
                 mPaint.setAlpha((int) (255 * pointWrap.getAlpha()));
