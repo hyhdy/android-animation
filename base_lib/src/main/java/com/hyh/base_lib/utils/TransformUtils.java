@@ -24,13 +24,28 @@ public class TransformUtils {
      * @param end
      * @return
      */
-    public static float getRangeRandomDouble(int start, int end) {
+    public static float getRangeRandomFloat(int start, int end) {
+        if (start >= end) {
+            return start;
+        }
+        Random random = new Random();
+        int result = random.nextInt(end - start) + start;
+        float resultFloat = random.nextFloat()+result;
+        return resultFloat;
+    }
+
+    /**
+     * 获取指定区间的随机数（可以是小数）
+     * @param start
+     * @param end
+     * @return
+     */
+    public static float getRangeRandomFloat(float start, float end) {
         if (start >= end) {
             return 0;
         }
         Random random = new Random();
-        int result = random.nextInt(end - start) + start;
-        float resultDouble = random.nextFloat()+result;
-        return resultDouble;
+        float resultFloat = random.nextFloat()+start;
+        return resultFloat;
     }
 }

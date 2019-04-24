@@ -123,13 +123,13 @@ public class ExplodeView extends View {
         PathMeasure pathMeasure = CoordinateUtils.getPathMeasure(mCenterPoint,mRadius);
         List<PointF> pointfListStart = CoordinateUtils.calculateRoundItemPositions(pathMeasure,
                 NUM_EXPLODE, 0);
-        float endOffsetAngel = (float) TransformUtils.getRangeRandomDouble(ANGEL_RANGE_START,ANGEL_RANGE_END);
+        float endOffsetAngel = TransformUtils.getRangeRandomFloat(ANGEL_RANGE_START,ANGEL_RANGE_END);
         List<PointF> pointfListEnd = CoordinateUtils.calculateRoundItemPositions(pathMeasure,
                 NUM_EXPLODE, endOffsetAngel);
 
         for(int i=0;i<NUM_EXPLODE;i++){
             ExplodeValue explodePoint = new ExplodeValue(String.format("%s%d","point",i));
-            float degree = TransformUtils.getRangeRandomDouble(ANGEL_RANGE_START,ANGEL_RANGE_END);
+            float degree = TransformUtils.getRangeRandomFloat(ANGEL_RANGE_START,ANGEL_RANGE_END);
             explodePoint.setRotateDegree(degree);
             explodePoint.setStartPoint(mCenterPoint);
             explodePoint.setMidPoint(pointfListStart.get(i));
