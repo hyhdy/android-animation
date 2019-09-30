@@ -1,5 +1,7 @@
 package com.hyh.android_animation.customview;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -18,6 +20,8 @@ import android.util.Pair;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnimationSet;
 import android.view.animation.Interpolator;
 
 import com.hyh.android_animation.R;
@@ -43,6 +47,7 @@ public class GoldCoinsView extends View {
     private int mHeight;//控件高度
     private int mCoinWidth;//金币宽度
     private int mCoinHeight;//金币高度
+    private Interpolator mInterPolator;
 
     public GoldCoinsView(Context context) {
         this(context,null);
@@ -61,6 +66,7 @@ public class GoldCoinsView extends View {
         mCoinHeight = mBitmap.getHeight();
         Log.d("hyh","GoldCoinsView: init: mCoinWidth="+mCoinWidth+" ,mCoinHeight="+mCoinHeight);
         mCamera = new Camera();
+        mInterPolator = new AccelerateInterpolator();
     }
 
     @Override
@@ -109,9 +115,10 @@ public class GoldCoinsView extends View {
     }
 
     public void startAnim(){
-        for(int i = 0; i<1; i++) {
+        List<Animator> animatorList = new ArrayList<>();
+        for(int i = 0; i<10; i++) {
             final int position = i;
-            final List<Pair<CoinMoveParam, CoinRotateParam>> paramsList = buildParams();
+            final List<Pair<CoinMoveParam, CoinRotateParam>> paramsList = buildAnimParams(i);
             final PropertyValuesHolder[] propertyValuesHolderArray = new PropertyValuesHolder[paramsList.size()*2];
             int index = 0;
             for (Pair<CoinMoveParam, CoinRotateParam> pair: paramsList) {
@@ -129,7 +136,8 @@ public class GoldCoinsView extends View {
             }
 
             ValueAnimator valueAnimator = ValueAnimator.ofPropertyValuesHolder(propertyValuesHolderArray);
-            valueAnimator.setDuration(2000);
+            valueAnimator.setInterpolator(mInterPolator);
+            valueAnimator.setDuration(1500+200*i);
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -148,8 +156,12 @@ public class GoldCoinsView extends View {
                     invalidate();
                 }
             });
-            valueAnimator.start();
+            animatorList.add(valueAnimator);
         }
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorList);
+        animatorSet.start();
     }
 
     /**
@@ -157,15 +169,17 @@ public class GoldCoinsView extends View {
      * @return
      */
     @NonNull
-    private List<Pair<CoinMoveParam, CoinRotateParam>> buildParams(){
+    private List<Pair<CoinMoveParam, CoinRotateParam>> buildAnimParams(int index){
         List<Pair<CoinMoveParam, CoinRotateParam>> list = new ArrayList<>();
 
-        int xRangeStart = (int) (mWidth * 0.2f);
-        int xRangeEnd = (int) (mWidth * 0.8f);
-        for(int i=0;i<4;i++){
+        int xRangeStart = (int) (mWidth * 0.1f);
+        int xRangeEnd = (int) (mWidth * 0.9f - mCoinWidth);
+        for(int i=0;i<3;i++){
             CoinMoveParam coinMoveParam = new CoinMoveParam(String.format("%s%s",CoinMoveParam.KEY_PREFIX,i));
+            //在控件宽度指定范围内随机取一个位置作为起始点x坐标
             int x = getRangeRandomInt(xRangeStart,xRangeEnd);
-            int startY = -getRangeRandomInt(0,mCoinHeight*2);
+            //起始点y坐标适当错开位置以便调整每个金币的距离
+            int startY = -(mCoinHeight*2 + mHeight*i/4 + mHeight/8*index);
             PointF start = new PointF(x,startY);
             PointF end = new PointF(x,mHeight);
             coinMoveParam.setStartPoint(start);
