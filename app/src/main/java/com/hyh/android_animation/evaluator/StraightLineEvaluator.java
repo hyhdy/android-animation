@@ -15,7 +15,6 @@ public class StraightLineEvaluator implements TypeEvaluator<PointF> {
         float x = startValue.x + fraction * (endValue.x - startValue.x);
         float y = startValue.y + fraction * (endValue.y - startValue.y);
         PointF point = new PointF(x, y);
-        Log.d("hyh", "StraightLineEvaluator: evaluate: point="+point.toString());
         return point;
     }
 }

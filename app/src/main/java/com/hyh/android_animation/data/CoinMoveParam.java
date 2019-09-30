@@ -7,10 +7,11 @@ import android.graphics.PointF;
  * 金币移动轨迹参数
  */
 public class CoinMoveParam {
+    public static final String KEY_PREFIX = "coin_move_";
     /**
      * 属性名
      */
-    private String mKey = "coin_move";
+    private String mKey;
     /**
      * 金币下落起始点
      */
@@ -22,7 +23,11 @@ public class CoinMoveParam {
     /**
      * 动画总时长，默认2秒
      */
-    private int mDuration = 2000;
+    private int mDuration = 20000;
+
+    public CoinMoveParam(String mKey) {
+        this.mKey = mKey;
+    }
 
     public PointF getStartPoint() {
         return mStartPoint;

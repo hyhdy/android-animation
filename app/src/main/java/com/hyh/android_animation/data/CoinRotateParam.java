@@ -7,10 +7,11 @@ import android.graphics.PointF;
  * 金币3d旋转轨迹参数
  */
 public class CoinRotateParam {
+    public static final String KEY_PREFIX = "coin_rotate_";
     /**
      * 属性名
      */
-    private String mKey = "coin_rotate";
+    private String mKey;
     /**
      * 金币做自由3d旋转的开始角度
      */
@@ -22,7 +23,11 @@ public class CoinRotateParam {
     /**
      * 动画总时长，默认2秒
      */
-    private int mDuration = 2000;
+    private int mDuration = 20000;
+
+    public CoinRotateParam(String mKey) {
+        this.mKey = mKey;
+    }
 
     public int getStartDegree() {
         return mStartDegree;
