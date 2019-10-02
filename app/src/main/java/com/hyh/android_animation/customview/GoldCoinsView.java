@@ -42,12 +42,12 @@ public class GoldCoinsView extends View {
     private Camera mCamera;
     private Matrix mMatrix;
     private Bitmap mBitmap;
-    private SparseArray<List<CoinFrameData>> mFrameArray = new SparseArray<>();
     private int mWidth;//控件宽度
     private int mHeight;//控件高度
     private int mCoinWidth;//金币宽度
     private int mCoinHeight;//金币高度
     private Interpolator mInterPolator;
+    private SparseArray<List<CoinFrameData>> mFrameArray = new SparseArray<>();
 
     public GoldCoinsView(Context context) {
         this(context,null);
@@ -93,15 +93,15 @@ public class GoldCoinsView extends View {
                 //setep2 旋转金币
                 mMatrix.reset();
                 final Camera camera = mCamera;
-                //将当前的摄像头位置保存下来，以便变换进行完成后恢复成原位，
+                //将当前的摄像头位置保存下来，以便变换进行完成后恢复成原位
                 camera.save();
-                //会以X轴为中心进行旋转。
+                //以X轴为中心进行旋转
                 camera.rotateX(frameData.degree);
-                //将我们刚才定义的一系列变换应用到变换矩阵上面，调用完这句之后，我们就可以将camera的位置恢复了，以便下一次再使用。
+                //将刚才定义的一系列变换应用到变换矩阵上面，调用完这句之后，我们就可以将camera的位置恢复了，以便下一次再使用
                 camera.getMatrix(mMatrix);
                 //camera位置恢复
                 camera.restore();
-                //以View的中心点为旋转中心,如果不加这两句，就是以（0,0）点为旋转中心
+                //以金币的中心点为旋转中心,如果不加这两句，就是以左上角顶点为旋转中心
                 mMatrix.preTranslate(-mCoinWidth/2, -mCoinHeight/2);
                 mMatrix.postTranslate(mCoinWidth/2, mCoinHeight/2);
 

@@ -20,10 +20,6 @@ public class CoinRotateParam {
      * 金币做自由3d旋转的结束角度，默认转三圈
      */
     private int mEndDegree = 360 * 3;
-    /**
-     * 动画总时长，默认2秒
-     */
-    private int mDuration = 20000;
 
     public CoinRotateParam(String mKey) {
         this.mKey = mKey;
@@ -43,14 +39,6 @@ public class CoinRotateParam {
 
     public void setEndDegree(int endDegree) {
         mEndDegree = endDegree;
-    }
-
-    public int getDuration() {
-        return mDuration;
-    }
-
-    public void setDuration(int duration) {
-        mDuration = duration;
     }
 
     public String getKey() {

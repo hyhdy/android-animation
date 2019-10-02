@@ -20,10 +20,6 @@ public class CoinMoveParam {
      * 金币下落结束点
      */
     private PointF mEndPoint;
-    /**
-     * 动画总时长，默认2秒
-     */
-    private int mDuration = 20000;
 
     public CoinMoveParam(String mKey) {
         this.mKey = mKey;
@@ -43,14 +39,6 @@ public class CoinMoveParam {
 
     public void setEndPoint(PointF endPoint) {
         mEndPoint = endPoint;
-    }
-
-    public int getDuration() {
-        return mDuration;
-    }
-
-    public void setDuration(int duration) {
-        mDuration = duration;
     }
 
     public String getKey() {
