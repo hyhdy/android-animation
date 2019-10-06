@@ -1,6 +1,7 @@
 package com.hyh.android_animation.customview;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
@@ -48,6 +49,7 @@ public class GoldCoinsView extends View {
     private int mCoinHeight;//金币高度
     private Interpolator mInterPolator;
     private SparseArray<List<CoinFrameData>> mFrameArray = new SparseArray<>();
+    private OnAnimListener mOnAnimListener;
 
     public GoldCoinsView(Context context) {
         this(context,null);
@@ -160,6 +162,23 @@ public class GoldCoinsView extends View {
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if(mOnAnimListener!=null){
+                    mOnAnimListener.onAnimStart();
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if(mOnAnimListener!=null){
+                    mOnAnimListener.onAnimEnd();
+                }
+            }
+
+        });
         animatorSet.playTogether(animatorList);
         animatorSet.start();
     }
@@ -204,5 +223,14 @@ public class GoldCoinsView extends View {
         Random random = new Random();
         int result = random.nextInt(end - start) + start + 1;
         return result;
+    }
+
+    public void setOnAnimListener(OnAnimListener onAnimListener) {
+        mOnAnimListener = onAnimListener;
+    }
+
+    public interface OnAnimListener{
+        void onAnimStart();
+        void onAnimEnd();
     }
 }

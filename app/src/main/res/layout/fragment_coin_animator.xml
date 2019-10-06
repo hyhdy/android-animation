@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
     >
-
-    <com.hyh.android_animation.customview.GoldCoinsView
-        android:id="@+id/gold_view"
-        android:layout_width="300dp"
-        android:layout_height="400dp"
-        android:layout_gravity="center"
-        />
 
     <TextView
         android:id="@+id/btn_start"
