@@ -1,5 +1,6 @@
 package com.hyh.android_animation.data;
 
+import android.graphics.Bitmap;
 import android.graphics.PointF;
 
 /**
@@ -20,6 +21,10 @@ public class CoinMoveParam {
      * 金币下落结束点
      */
     private PointF mEndPoint;
+    /**
+     * 金币图标
+     */
+    private Bitmap mCoinIcon;
 
     public CoinMoveParam(String mKey) {
         this.mKey = mKey;
@@ -47,5 +52,13 @@ public class CoinMoveParam {
 
     public void setKey(String key) {
         mKey = key;
+    }
+
+    public Bitmap getCoinIcon() {
+        return mCoinIcon;
+    }
+
+    public void setCoinIcon(Bitmap mCoinIcon) {
+        this.mCoinIcon = mCoinIcon;
     }
 }

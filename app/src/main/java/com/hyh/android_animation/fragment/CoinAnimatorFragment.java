@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hyh.android_animation.R;
+import com.hyh.android_animation.customview.EasyGoldCoinsView;
 import com.hyh.android_animation.customview.GoldCoinsView;
 import com.hyh.annotation.InjectFragment;
 import com.hyh.base_lib.BaseFragment;
@@ -32,8 +33,30 @@ public class CoinAnimatorFragment extends BaseFragment {
         mTvStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final GoldCoinsView goldCoinsView = new GoldCoinsView(getContext());
-                goldCoinsView.setOnAnimListener(new GoldCoinsView.OnAnimListener() {
+//                final GoldCoinsView goldCoinsView = new GoldCoinsView(getContext());
+//                goldCoinsView.setOnAnimListener(new GoldCoinsView.OnAnimListener() {
+//                    @Override
+//                    public void onAnimStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimEnd() {
+//                        mFlRoot.removeView(goldCoinsView);
+//                    }
+//                });
+//                FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(SizeUtils.dp2px(300),SizeUtils.dp2px(400));
+//                layoutParams.gravity = Gravity.CENTER;
+//                mFlRoot.addView(goldCoinsView,layoutParams);
+//                mFlRoot.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        goldCoinsView.startAnim();
+//                    }
+//                });
+
+                final EasyGoldCoinsView goldCoinsView = new EasyGoldCoinsView(getContext());
+                goldCoinsView.setOnAnimListener(new EasyGoldCoinsView.OnAnimListener() {
                     @Override
                     public void onAnimStart() {
 
