@@ -1,14 +1,12 @@
 package com.hyh.android_animation.fragment;
 
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.hyh.android_animation.R;
-import com.hyh.android_animation.customview.EasyGoldCoinsView;
-import com.hyh.android_animation.customview.GoldCoinsView;
+import com.hyh.android_animation.customview.GoldCoinsAnimView;
 import com.hyh.annotation.InjectFragment;
 import com.hyh.base_lib.BaseFragment;
 import com.hyh.base_lib.annotation.FindViewByIdAno;
@@ -55,8 +53,8 @@ public class CoinAnimatorFragment extends BaseFragment {
 //                    }
 //                });
 
-                final EasyGoldCoinsView goldCoinsView = new EasyGoldCoinsView(getContext());
-                goldCoinsView.setOnAnimListener(new EasyGoldCoinsView.OnAnimListener() {
+                final GoldCoinsAnimView goldCoinsView = new GoldCoinsAnimView(getContext());
+                goldCoinsView.setOnAnimListener(new GoldCoinsAnimView.OnAnimListener() {
                     @Override
                     public void onAnimStart() {
 
